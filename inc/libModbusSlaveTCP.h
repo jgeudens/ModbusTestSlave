@@ -14,6 +14,8 @@ class libModbusSlaveTCP
         int32_t Work();
         void Close();
 
+        void SetData(uint32_t index, uint16_t data);
+
     private:
         int s;
         modbus_t *ctx;

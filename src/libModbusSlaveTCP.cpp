@@ -80,6 +80,12 @@ int32_t libModbusSlaveTCP::Open(string ip, int32_t port)
 
 }
 
+
+void libModbusSlaveTCP::SetData(uint32_t index, uint16_t data)
+{
+    mb_mapping->tab_registers[index] = data;
+}
+
 int32_t libModbusSlaveTCP::Work()
 {
     int32_t rc = -1;
