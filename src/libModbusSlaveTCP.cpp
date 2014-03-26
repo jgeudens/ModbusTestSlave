@@ -95,6 +95,11 @@ int32_t libModbusSlaveTCP::Work()
     {
         modbus_reply(ctx, query, rc, mb_mapping);
     }
+    else
+    {
+        Close();
+        Open("127.0.0.1", 1502);
+    }
 
     return rc;
 }

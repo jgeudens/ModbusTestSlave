@@ -49,10 +49,7 @@ int main()
         slave.SetData(0, data);
         slave.SetData(1, -1 * data);
 
-        if (slave.Work() == -1)
-        {
-            break;
-        }
+        slave.Work();
 
     }
 
