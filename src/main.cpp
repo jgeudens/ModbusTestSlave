@@ -35,12 +35,12 @@ int main()
     for(;;)
     {
 
-        if ((GetMilliSeconds() - startTime) > 500u) /* Update every 500 ms */
+        if ((GetMilliSeconds() - startTime) > 50u) /* Update every 50 ms */
         {
             startTime = GetMilliSeconds();
 
             data++;
-            if (data > 20)
+            if (data > 2000)
             {
                 data = 0;
             }
