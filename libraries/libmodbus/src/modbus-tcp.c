@@ -70,7 +70,20 @@ static int _modbus_tcp_init_win32(void)
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         fprintf(stderr, "WSAStartup() returned error code %d\n",
-                (unsigned int)GetLastError());
+                (unsigned int)WSAGetLastError());
+        errno = EIO;
+        return -1;
+    }
+    return 0;
+}
+
+static int _modbus_tcp_deinit_win32(void)
+{
+	/* Clean up Windows socket API */
+    if (WSACleanup() != 0)
+    {
+        fprintf(stderr, "WSACleanup() returned error code %d\n",
+                    (unsigned int)WSAGetLastError());
         errno = EIO;
         return -1;
     }
@@ -344,6 +357,10 @@ void _modbus_tcp_close(modbus_t *ctx)
 {
     shutdown(ctx->s, SHUT_RDWR);
     close(ctx->s);
+
+#ifdef OS_WIN32
+    _modbus_tcp_deinit_win32();
+#endif
 }
 
 int _modbus_tcp_flush(modbus_t *ctx)
