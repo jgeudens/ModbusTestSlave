@@ -1,0 +1,51 @@
+From 5267b451b5cdca2748d75f7343978d233bd685bd Mon Sep 17 00:00:00 2001
+From: Jens Geudens <jensgeudens@hotmail.com>
+Date: Fri, 29 Aug 2014 20:25:02 +0200
+Subject: [PATCH] Added WSACleanup function call (Windows socket API) Changed
+ GetLastError to WSAGetLastError (should be used according documentation)
+
+Signed-off-by: Jens Geudens <jensgeudens@hotmail.com>
+---
+ src/modbus-tcp.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/src/modbus-tcp.c b/src/modbus-tcp.c
+index 96dda63..4732acd 100644
+--- a/src/modbus-tcp.c
++++ b/src/modbus-tcp.c
+@@ -71,7 +71,20 @@ static int _modbus_tcp_init_win32(void)
+ 
+     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+         fprintf(stderr, "WSAStartup() returned error code %d\n",
+-                (unsigned int)GetLastError());
++                (unsigned int)WSAGetLastError());
++        errno = EIO;
++        return -1;
++    }
++    return 0;
++}
++
++static int _modbus_tcp_deinit_win32(void)
++{
++	/* Clean up Windows socket API */
++    if (WSACleanup() != 0)
++    {
++        fprintf(stderr, "WSACleanup() returned error code %d\n",
++                    (unsigned int)WSAGetLastError());
+         errno = EIO;
+         return -1;
+     }
+@@ -441,6 +454,10 @@ static void _modbus_tcp_close(modbus_t *ctx)
+         shutdown(ctx->s, SHUT_RDWR);
+         close(ctx->s);
+         ctx->s = -1;
++
++#ifdef OS_WIN32
++        _modbus_tcp_deinit_win32();
++#endif
+     }
+ }
+ 
+-- 
+1.9.4.msysgit.0
+
