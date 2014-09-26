@@ -72,9 +72,16 @@ void MainApp::ModbusStopped()
 
 void MainApp::UpdateData()
 {
-#ifdef QT_DEBUG_OUTPUT
-    qDebug() << "Update data";
-#endif
+    for (quint32 i = 0; i < 5; i++)
+    {
+        _data[i]++;
+        if (_data[i] > ((i + 1) * 10))
+        {
+            _data[i] = 0;
+        }
+        _modbusThread->SetData(i, _data[i]);
+    }
+
 }
 
 void MainApp::QuitApplication()

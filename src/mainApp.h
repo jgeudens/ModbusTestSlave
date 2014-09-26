@@ -42,6 +42,8 @@ private:
 
     QTimer * _dataTimer;
 
+    quint16 _data[5];
+
 };
 
 #endif // !MAIN_APP_H
