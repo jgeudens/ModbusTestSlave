@@ -16,13 +16,13 @@ using namespace std;
 #include <fcntl.h>
 
 /** Returns true on success, or false if there was an error */
-int SetSocketBlockingEnabled(int fd, bool blocking)
+int ModbusSlaveTCP::setSocketBlockingEnabled(int fd, bool blocking)
 {
    if (fd < 0) return false;
 
 #ifdef WIN32
    unsigned long mode = blocking ? 0 : 1;
-   return (ioctlsocket(fd, FIONBIO, &mode) == 0) ? true : false;
+   return ioctlsocket(fd, FIONBIO, &mode);
 #else
    int flags = fcntl(fd, F_GETFL, 0);
    if (flags < 0) return -1;
@@ -51,7 +51,7 @@ ModbusSlaveTCP::~ModbusSlaveTCP()
 }
 
 
-int32_t ModbusSlaveTCP::Open(string ip, int32_t port)
+int32_t ModbusSlaveTCP::openPort(string ip, int32_t port)
 {
     int32_t ret = -1;
 
@@ -65,7 +65,7 @@ int32_t ModbusSlaveTCP::Open(string ip, int32_t port)
 
         if (_socket != -1)
         {
-            ret = SetSocketBlockingEnabled(_socket, false);
+            ret = setSocketBlockingEnabled(_socket, false);
             if (ret == -1)
             {
                 cerr << "Socket (non-)blocking mode set failed" << endl;
@@ -83,7 +83,7 @@ int32_t ModbusSlaveTCP::Open(string ip, int32_t port)
 
     if (ret == -1)
     {
-        Close();
+        closePort();
     }
 
     return ret;
@@ -91,12 +91,12 @@ int32_t ModbusSlaveTCP::Open(string ip, int32_t port)
 }
 
 
-void ModbusSlaveTCP::SetData(uint32_t index, uint16_t data)
+void ModbusSlaveTCP::setData(uint32_t index, uint16_t data)
 {
     _mb_mapping->tab_registers[index] = data;
 }
 
-void ModbusSlaveTCP::DoWork()
+void ModbusSlaveTCP::doWork()
 {
 
     switch(_state)
@@ -136,7 +136,7 @@ void ModbusSlaveTCP::DoWork()
 }
 
 
-void ModbusSlaveTCP::Close()
+void ModbusSlaveTCP::closePort()
 {
 
     if (_socket != -1)

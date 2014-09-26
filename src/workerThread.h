@@ -10,18 +10,18 @@ public:
     explicit WorkerThread(QObject *parent = 0);
     virtual ~WorkerThread();
 
-    void StartThread();
-    void Wait();
+    void startThread();
+    void wait();
 
 signals:
-    void ThreadStopped();
+    void threadStopped();
 
 public slots:
-    virtual void DoWork() = 0;
-    void StopThread();
+    virtual void doWork() = 0;
+    void stopThread();
 
 private slots:
-    void Stopped();
+    void stopped();
     
 private:
     QThread * _thread;

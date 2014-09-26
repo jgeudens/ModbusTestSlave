@@ -9,10 +9,10 @@ class PollQuit : public WorkerThread
     Q_OBJECT
 
 public slots:
-    void DoWork();
+    void doWork();
 
 signals:
-    void QuitRequested();
+    void quitRequested();
 
 private:
     int init_win32();

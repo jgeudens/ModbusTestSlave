@@ -12,7 +12,7 @@
     #include <iostream>
 #endif
 
-void PollQuit::DoWork()
+void PollQuit::doWork()
 {
 #if defined(_WIN32)
     const HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -50,7 +50,7 @@ void PollQuit::DoWork()
         std::cin >> c;
         if (c == 'q')
         {
-            emit QuitRequested();
+            emit quitRequested();
         }
     }
     else

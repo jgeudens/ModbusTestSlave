@@ -16,19 +16,19 @@ WorkerThread::~WorkerThread()
 
 }
 
-void WorkerThread::StartThread()
+void WorkerThread::startThread()
 {
     if(_thread == NULL)
     {
         _thread = new QThread();
         _thread->start();
         connect(_thread, SIGNAL(finished()), _thread, SLOT(deleteLater()));
-        connect(_thread, SIGNAL(finished()), this, SLOT(Stopped()));
+        connect(_thread, SIGNAL(finished()), this, SLOT(stopped()));
         moveToThread(_thread);
     }
 }
 
-void WorkerThread::Wait()
+void WorkerThread::wait()
 {
     if(_thread)
     {
@@ -36,17 +36,17 @@ void WorkerThread::Wait()
     }
 }
 
-void WorkerThread::StopThread()
+void WorkerThread::stopThread()
 {
     _thread->quit();
 }
 
-void WorkerThread::Stopped()
+void WorkerThread::stopped()
 {
     /* thread is deleted using a connection between thread->finished and thread->deleteLater */
     _thread = NULL;
 
-    emit ThreadStopped();
+    emit threadStopped();
 }
 
 

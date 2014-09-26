@@ -17,21 +17,21 @@ public:
     MainApp();
 
 public slots:
-    void StartApplication();
+    void startApplication();
 
 signals:
     void finished();
-    void CheckInput();
-    void RequestApplicationStop();
+    void checkInput();
+    void requestApplicationStop();
 
-    void QuitRequested();
+    void quitRequested();
 
 private slots:
-    void PollQuitStopped();
-    void ModbusStopped();
+    void pollQuitStopped();
+    void modbusStopped();
 
-    void QuitApplication();
-    void UpdateData();
+    void quitApplication();
+    void updateData();
 
 private:
     QTimer * _pollQuitTimer;

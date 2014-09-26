@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QObject::connect(myApp, SIGNAL(finished()), &a, SLOT(quit()));
 
     // This will run the myApp from the application event loop.
-    QTimer::singleShot(0, myApp, SLOT(StartApplication()));
+    QTimer::singleShot(0, myApp, SLOT(startApplication()));
 
     return a.exec();
 }

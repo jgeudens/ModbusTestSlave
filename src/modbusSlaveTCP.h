@@ -13,14 +13,16 @@ class ModbusSlaveTCP : public WorkerThread
         ModbusSlaveTCP();
         ~ModbusSlaveTCP();
 
-        void SetData(uint32_t index, uint16_t data);
-        int32_t Open(std::string ip, int32_t port);
-        void Close();
+        void setData(uint32_t index, uint16_t data);
+        int32_t openPort(std::string ip, int32_t port);
+        void closePort();
 
     public slots:
-        void DoWork();
+        void doWork();
 
     private:
+
+        int setSocketBlockingEnabled(int fd, bool blocking);
 
         typedef enum
         {
