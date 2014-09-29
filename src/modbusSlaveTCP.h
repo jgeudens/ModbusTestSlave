@@ -23,6 +23,9 @@ class ModbusSlaveTCP : public WorkerThread
     private:
 
         int setSocketBlockingEnabled(int fd, bool blocking);
+#if defined(_WIN32)
+        int modbus_tcp_deinit_win32(void);
+#endif
 
         typedef enum
         {

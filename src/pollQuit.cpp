@@ -24,7 +24,7 @@ void PollQuit::doWork()
             int i = _getch();
             if (i == 'q')
             {
-                emit QuitRequested();
+                emit quitRequested();
             }
         }
     }

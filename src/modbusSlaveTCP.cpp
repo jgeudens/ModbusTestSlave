@@ -32,6 +32,22 @@ int ModbusSlaveTCP::setSocketBlockingEnabled(int fd, bool blocking)
 }
 
 
+#if defined(_WIN32)
+int ModbusSlaveTCP::modbus_tcp_deinit_win32(void)
+{
+    /* Clean up Windows socket API */
+    if (WSACleanup() != 0)
+    {
+        fprintf(stderr, "WSACleanup() returned error code %d\n",
+                    (unsigned int)WSAGetLastError());
+        errno = EIO;
+        return -1;
+    }
+    return 0;
+}
+#endif
+
+
 
 ModbusSlaveTCP::ModbusSlaveTCP()
 {
@@ -138,6 +154,9 @@ void ModbusSlaveTCP::doWork()
 
 void ModbusSlaveTCP::closePort()
 {
+#if defined(_WIN32)
+    modbus_tcp_deinit_win32();
+#endif
 
     if (_socket != -1)
     {

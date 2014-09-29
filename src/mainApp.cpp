@@ -102,7 +102,6 @@ void MainApp::quitApplication()
 
     if (_modbusThread)
     {
-
         _modbusThread->wait();
     }
 
