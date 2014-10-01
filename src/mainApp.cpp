@@ -37,7 +37,7 @@ void MainApp::startApplication()
     connect(_modbusThread, SIGNAL(threadStopped()), _modbusThread, SLOT(deleteLater()));
     _modbusThread->startThread();
 
-    if (_modbusThread->openPort("127.0.0.1", 1502) == -1)
+    if (_modbusThread->openPort("127.0.0.1", 502) == -1)
     {
         //abort application
         emit quitRequested();
