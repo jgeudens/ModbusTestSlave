@@ -359,7 +359,7 @@ void _modbus_tcp_close(modbus_t *ctx)
     close(ctx->s);
 
 #ifdef OS_WIN32
-    _modbus_tcp_deinit_win32();
+    //_modbus_tcp_deinit_win32();
 #endif
 }
 
