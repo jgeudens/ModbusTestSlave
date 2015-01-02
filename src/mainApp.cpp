@@ -74,11 +74,16 @@ void MainApp::updateData()
 {
     for (quint32 i = 0; i < 5; i++)
     {
-        _data[i]++;
+        _data[i]+= 2*(i+1);
         if (_data[i] > ((i + 1) * 10))
         {
             _data[i] = 0;
         }
+        _modbusThread->setData(i, _data[i]);
+    }
+    for (quint32 i = 5; i < 10; i++)
+    {
+        _data[i] = -_data[i - 5];
         _modbusThread->setData(i, _data[i]);
     }
 
