@@ -1,19 +1,15 @@
-
-#include <errno.h>
-#include "mainApp.h"
+#include "mainwindow.h"
+#include <QApplication>
+#include <QLoggingCategory>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QLoggingCategory::setFilterRules(QStringLiteral("qt.modbus* = true"));
 
-    MainApp *myApp = new MainApp();
+    QApplication a(argc, argv);
+    MainWindow w;
 
-    // This will cause the application to exit when
-    // the myApp signals finished.    
-    QObject::connect(myApp, SIGNAL(finished()), &a, SLOT(quit()));
-
-    // This will run the myApp from the application event loop.
-    QTimer::singleShot(0, myApp, SLOT(startApplication()));
+    w.show();
 
     return a.exec();
 }
