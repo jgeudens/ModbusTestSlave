@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+
 #include "ui_mainwindow.h"
 
 #include <QModbusTcpServer>
@@ -11,14 +12,27 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _pUi->setupUi(this);
 
-    connect(_pUi->btnConnect, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
-    connect(_pUi->btnDisconnect, &QPushButton::clicked, this, &MainWindow::onDisconnectClicked);
-
     _pSlaveModbus = new TestSlaveModbus();
-    _pSlaveData = new TestSlaveData(_pSlaveModbus);
+    _pSlaveData = new TestSlaveData(_pSlaveModbus, 95);
+
+    _pRegisterStateModel = new RegisterStateModel(_pSlaveData);
+
+    connect(_pUi->btnListen, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
+    connect(_pUi->btnDisconnect, &QPushButton::clicked, this, &MainWindow::onDisconnectClicked);
 
     connect(_pSlaveModbus, &QModbusServer::stateChanged, this, &MainWindow::onStateChanged);
     connect(_pSlaveModbus, &QModbusServer::errorOccurred, this, &MainWindow::handleDeviceError);
+
+    // Setup registerView
+    _pUi->tableViewState->setModel(_pRegisterStateModel);
+    _pUi->tableViewState->verticalHeader()->show();
+    _pUi->tableViewState->horizontalHeader()->hide(); // Not sure yet (show or not to show?)
+
+    // Reduce minimum size
+    _pUi->tableViewState->horizontalHeader()->setMinimumSectionSize(10);
+
+    /* Don't stretch columns, resize to contents */
+    _pUi->tableViewState->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 MainWindow::~MainWindow()
@@ -36,42 +50,42 @@ MainWindow::~MainWindow()
 
 void MainWindow::onConnectClicked(void)
 {
-    qDebug() << "Connect clicked";
-
     const QUrl hostUrl = QUrl::fromUserInput("127.0.0.1:5002");
-    if (!_pSlaveModbus->connect(hostUrl, 1))
+    if (_pSlaveModbus->connect(hostUrl, 1))
     {
-        qDebug() << "Connect failed: " << _pSlaveModbus->errorString();
+        _pUi->btnListen->setEnabled(false);
+        _pUi->btnDisconnect->setEnabled(true);
     }
     else
     {
-        _pUi->btnConnect->setEnabled(false);
-        _pUi->btnDisconnect->setEnabled(true);
+        qDebug() << "Connect failed: " << _pSlaveModbus->errorString();
     }
 }
 
 void MainWindow::onDisconnectClicked(void)
 {
-    qDebug() << "Disconnect clicked";
-
     _pSlaveModbus->disconnectDevice();
-    _pUi->btnConnect->setEnabled(true);
+    _pUi->btnListen->setEnabled(true);
     _pUi->btnDisconnect->setEnabled(false);
 }
 
 void MainWindow::handleDeviceError(QModbusDevice::Error newError)
 {
     if (newError == QModbusDevice::NoError || !_pSlaveModbus)
+    {
         return;
+    }
 
-    qDebug() << _pSlaveModbus->errorString();
+    qDebug() << "Error: " << _pSlaveModbus->errorString();
 }
 
 void MainWindow::onStateChanged(QModbusDevice::State state)
 {
-    bool connected = (state != QModbusDevice::UnconnectedState);
-    _pUi->btnConnect->setEnabled(!connected);
-    _pUi->btnDisconnect->setEnabled(connected);
+    qDebug() << "State: " << state;
 
-    qDebug() << "State change: " << state;
+    bool connected = (state != QModbusDevice::UnconnectedState);
+    _pUi->btnListen->setEnabled(!connected);
+    _pUi->spinSlaveId->setEnabled(!connected);
+    _pUi->spinSlavePort->setEnabled(!connected);
+    _pUi->btnDisconnect->setEnabled(connected);
 }

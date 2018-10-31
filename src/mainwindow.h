@@ -5,6 +5,8 @@
 #include "testslavemodbus.h"
 #include "testslavedata.h"
 
+#include "registerstatemodel.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -31,6 +33,8 @@ private:
 
     TestSlaveModbus *_pSlaveModbus;
     TestSlaveData *_pSlaveData;
+
+    RegisterStateModel *_pRegisterStateModel;
 };
 
 #endif // MAINWINDOW_H
