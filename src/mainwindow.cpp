@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _pSlaveData->setRegisterState(3, true);
     _pSlaveData->setRegisterState(4, true);
 
-    _pRegisterStateModel = new RegisterStateModel(_pSlaveData);
+    _pRegisterDataModel = new RegisterDataModel(_pSlaveData);
 
     connect(_pUi->btnListen, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(_pUi->btnDisconnect, &QPushButton::clicked, this, &MainWindow::onDisconnectClicked);
@@ -29,16 +29,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_pSlaveModbus, &QModbusServer::stateChanged, this, &MainWindow::onStateChanged);
     connect(_pSlaveModbus, &QModbusServer::errorOccurred, this, &MainWindow::handleDeviceError);
 
-    // Setup registerView
-    _pUi->tableViewState->setModel(_pRegisterStateModel);
-    _pUi->tableViewState->verticalHeader()->show();
-    _pUi->tableViewState->horizontalHeader()->hide(); // Not sure yet (show or not to show?)
-
-    // Reduce minimum size
-    _pUi->tableViewState->horizontalHeader()->setMinimumSectionSize(10);
+    /*** Setup registerView **/
+    _pUi->tblRegData->setModel(_pRegisterDataModel);
+    _pUi->tblRegData->verticalHeader()->show();
+    _pUi->tblRegData->horizontalHeader()->show(); // Not sure yet (show or not to show?)
 
     /* Don't stretch columns, resize to contents */
-    _pUi->tableViewState->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 MainWindow::~MainWindow()

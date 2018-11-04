@@ -1,15 +1,15 @@
-#ifndef REGISTERSTATEMODEL_H
-#define REGISTERSTATEMODEL_H
+#ifndef REGISTERDATAMODEL_H
+#define REGISTERDATAMODEL_H
 
 #include <QAbstractTableModel>
 
 #include "testslavedata.h"
 
-class RegisterStateModel : public QAbstractTableModel
+class RegisterDataModel : public QAbstractTableModel
 {
 
 public:
-    explicit RegisterStateModel(TestSlaveData *pTestSlaveData, QObject *parent = nullptr);
+    explicit RegisterDataModel(TestSlaveData *pTestSlaveData, QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
@@ -25,11 +25,11 @@ public:
     // Editable:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
-private:
+protected:
     TestSlaveData *_pTestSlaveData;
 
     const quint16 _cRegistersPerRow = 10;
 
 };
 
-#endif // REGISTERSTATEMODEL_H
+#endif // REGISTERDATAMODEL_H

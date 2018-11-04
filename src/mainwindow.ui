@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
-    <height>426</height>
+    <width>1006</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -178,22 +178,12 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Register value</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Register state</string>
+            <string>Register data</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QTableView" name="tableViewValue"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QTableView" name="tableViewState"/>
+          <widget class="QTableView" name="tblRegData"/>
          </item>
         </layout>
        </item>

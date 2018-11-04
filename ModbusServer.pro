@@ -14,13 +14,13 @@ SOURCES += \
     src/mainwindow.cpp \
     testslave/testslavemodbus.cpp \
     testslave/testslavedata.cpp \
-    src/registerstatemodel.cpp
+    src/registerdatamodel.cpp
 
 HEADERS += \
     src/mainwindow.h \
     testslave/testslavemodbus.h \
     testslave/testslavedata.h \
-    src/registerstatemodel.h
+    src/registerdatamodel.h
 
 FORMS += \
     src/mainwindow.ui
