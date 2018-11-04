@@ -9,23 +9,16 @@ class TestSlaveData : public QObject
 {
     Q_OBJECT
 public:
-    explicit TestSlaveData(QModbusServer *pModbusServer, quint32 registerCount);
+    explicit TestSlaveData(quint32 registerCount = 100);
     ~TestSlaveData();
 
-    int size();
+    uint size();
 
-    void setRegisterState(int registerAddress, bool bState);
-    void setRegisterValue(int registerAddress, quint16 value);
+    void setRegisterState(uint registerAddress, bool bState);
+    void setRegisterValue(uint registerAddress, quint16 value);
 
-    bool registerState(int registerAddress);
-    quint16 registerValue(int registerAddress);
-
-signals:
-
-public slots:
-
-private slots:
-    void onDataChanged(QModbusDataUnit::RegisterType reg, int address, int size);
+    bool registerState(uint registerAddress);
+    quint16 registerValue(uint registerAddress);
 
 private:
 
@@ -35,12 +28,7 @@ private:
         quint16 value;
     } registerData_t;
 
-    void recreateModbusMap();
-    void setValue(int registerAddress, quint16 value);
-
-    QModbusServer *_pModbusServer;
-
-    QVector<registerData_t> _registerList;
+    QList<registerData_t> _registerList;
 
 };
 

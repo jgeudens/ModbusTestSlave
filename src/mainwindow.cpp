@@ -12,8 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _pUi->setupUi(this);
 
-    _pSlaveModbus = new TestSlaveModbus();
-    _pSlaveData = new TestSlaveData(_pSlaveModbus, 95);
+    _pSlaveData = new TestSlaveData();
+    _pSlaveModbus = new TestSlaveModbus(_pSlaveData);
+
+    _pSlaveData->setRegisterState(0, true);
+    _pSlaveData->setRegisterState(1, true);
+    _pSlaveData->setRegisterState(2, true);
+    _pSlaveData->setRegisterState(3, true);
+    _pSlaveData->setRegisterState(4, true);
 
     _pRegisterStateModel = new RegisterStateModel(_pSlaveData);
 
@@ -50,8 +56,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::onConnectClicked(void)
 {
-    const QUrl hostUrl = QUrl::fromUserInput("127.0.0.1:5002");
-    if (_pSlaveModbus->connect(hostUrl, 1))
+    QUrl hostUrl;
+    hostUrl.setPort(_pUi->spinSlavePort->value());
+    hostUrl.setHost("127.0.0.1");
+
+    if (_pSlaveModbus->connect(hostUrl, _pUi->spinSlaveId->value()))
     {
         _pUi->btnListen->setEnabled(false);
         _pUi->btnDisconnect->setEnabled(true);

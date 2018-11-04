@@ -4,18 +4,26 @@
 #include <QModbusTcpServer>
 #include <QUrl>
 
+#include "testslavedata.h"
+
 class TestSlaveModbus : public QModbusTcpServer
 {
     Q_OBJECT
 public:
-    explicit TestSlaveModbus(QObject *parent = nullptr);
+    explicit TestSlaveModbus(TestSlaveData *pTestSlaveData, QObject *parent = nullptr);
     ~TestSlaveModbus();
 
     bool connect(QUrl host, int slaveId);
 
-signals:
+    bool readData(QModbusDataUnit *newData) const;
+    bool setMap(const QModbusDataUnitMap &map);
+    bool writeData(const QModbusDataUnit &newData);
 
-public slots:
+private:
+
+    bool verifyValidHoldingRegister(const QModbusDataUnit *dataUnit) const;
+
+    TestSlaveData *_pTestSlaveData;
 
 };
 
