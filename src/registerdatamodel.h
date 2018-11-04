@@ -25,6 +25,9 @@ public:
     // Editable:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
+public slots:
+    void handleDataChange();
+
 protected:
     TestSlaveData *_pTestSlaveData;
 

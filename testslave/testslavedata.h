@@ -20,6 +20,11 @@ public:
     bool registerState(uint registerAddress);
     quint16 registerValue(uint registerAddress);
 
+    void incrementAllEnabledRegisters();
+
+signals:
+    void dataChanged();
+
 private:
 
     typedef struct

@@ -130,3 +130,9 @@ bool RegisterDataModel::setData(const QModelIndex &index, const QVariant &value,
 
     return bRet;
 }
+
+void RegisterDataModel::handleDataChange()
+{
+    // Notify view(s) of changes
+    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
+}

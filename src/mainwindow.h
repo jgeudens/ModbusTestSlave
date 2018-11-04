@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+
 #include "testslavemodbus.h"
 #include "testslavedata.h"
 
@@ -27,9 +29,15 @@ private slots:
     void handleDeviceError(QModbusDevice::Error newError);
     void onStateChanged(QModbusDevice::State state);
 
+    void handleAutoIncChanged(int state);
+    void handleAutoIncTick();
+
 private:
 
     Ui::MainWindow *_pUi;
+
+    QTimer _autoIncTimer;
+    bool bAutoInc;
 
     TestSlaveModbus *_pSlaveModbus;
     TestSlaveData *_pSlaveData;

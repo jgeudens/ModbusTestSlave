@@ -23,11 +23,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _pRegisterDataModel = new RegisterDataModel(_pSlaveData);
 
+    connect(_pSlaveData, &TestSlaveData::dataChanged, _pRegisterDataModel, &RegisterDataModel::handleDataChange);
+
     connect(_pUi->btnListen, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(_pUi->btnDisconnect, &QPushButton::clicked, this, &MainWindow::onDisconnectClicked);
 
     connect(_pSlaveModbus, &QModbusServer::stateChanged, this, &MainWindow::onStateChanged);
     connect(_pSlaveModbus, &QModbusServer::errorOccurred, this, &MainWindow::handleDeviceError);
+
+    /*** Auto increment ***/
+    connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
+    _autoIncTimer.start(1000);
+    bAutoInc = false;
+    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this, &MainWindow::handleAutoIncChanged);
 
     /*** Setup registerView **/
     _pUi->tblRegData->setModel(_pRegisterDataModel);
@@ -40,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    _autoIncTimer.stop();
+
     if (_pSlaveModbus)
     {
         _pSlaveModbus->disconnectDevice();
@@ -94,4 +104,24 @@ void MainWindow::onStateChanged(QModbusDevice::State state)
     _pUi->spinSlaveId->setEnabled(!connected);
     _pUi->spinSlavePort->setEnabled(!connected);
     _pUi->btnDisconnect->setEnabled(connected);
+}
+
+void MainWindow::handleAutoIncChanged(int state)
+{
+    if (state == Qt::Checked)
+    {
+        bAutoInc = true;
+    }
+    else
+    {
+        bAutoInc = false;
+    }
+}
+
+void MainWindow::handleAutoIncTick()
+{
+    if (bAutoInc)
+    {
+        _pSlaveData->incrementAllEnabledRegisters();
+    }
 }

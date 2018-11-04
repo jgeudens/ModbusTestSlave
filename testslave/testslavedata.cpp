@@ -32,6 +32,8 @@ void TestSlaveData::setRegisterState(uint registerAddress, bool bState)
         if (_registerList[registerAddress].bState != bState)
         {
             _registerList[registerAddress].bState = bState;
+
+            emit dataChanged();
         }
     }
 }
@@ -43,6 +45,8 @@ void TestSlaveData::setRegisterValue(uint registerAddress, quint16 value)
         if (_registerList[registerAddress].value != value)
         {
             _registerList[registerAddress].value = value;
+
+            emit dataChanged();
         }
     }
 }
@@ -65,4 +69,17 @@ quint16 TestSlaveData::registerValue(uint registerAddress)
     }
 
     return 0;
+}
+
+void TestSlaveData::incrementAllEnabledRegisters()
+{
+    for(uint idx = 0u; idx < _registerList.size(); idx++)
+    {
+        if (_registerList[idx].bState)
+        {
+            _registerList[idx].value++;
+        }
+    }
+
+    emit dataChanged();
 }
