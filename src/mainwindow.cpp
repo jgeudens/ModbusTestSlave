@@ -15,11 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _pSlaveData = new TestSlaveData();
     _pSlaveModbus = new TestSlaveModbus(_pSlaveData);
 
-    _pSlaveData->setRegisterState(0, true);
-    _pSlaveData->setRegisterState(1, true);
-    _pSlaveData->setRegisterState(2, true);
-    _pSlaveData->setRegisterState(3, true);
-    _pSlaveData->setRegisterState(4, true);
+    QList<uint> registerList = QList<uint>() << 0 << 1 << 2 << 3 << 4;
+    _pSlaveData->setRegisterState(registerList, true);
 
     _pRegisterDataModel = new RegisterDataModel(_pSlaveData);
 

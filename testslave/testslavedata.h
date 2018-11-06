@@ -15,6 +15,8 @@ public:
     uint size();
 
     void setRegisterState(uint registerAddress, bool bState);
+    void setRegisterState(QList<uint> registerAddressList, bool bState);
+
     void setRegisterValue(uint registerAddress, quint16 value);
 
     bool registerState(uint registerAddress);

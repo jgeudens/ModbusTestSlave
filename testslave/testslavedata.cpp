@@ -27,14 +27,29 @@ uint TestSlaveData::size()
 
 void TestSlaveData::setRegisterState(uint registerAddress, bool bState)
 {
-    if (registerAddress < _registerList.size())
-    {
-        if (_registerList[registerAddress].bState != bState)
-        {
-            _registerList[registerAddress].bState = bState;
+    setRegisterState(QList<uint>() << registerAddress, bState);
+}
 
-            emit dataChanged();
+void TestSlaveData::setRegisterState(QList<uint> registerAddressList, bool bState)
+{
+    bool bChanged = false;
+
+    Q_FOREACH(uint registerAddress, registerAddressList)
+    {
+        if (registerAddress < _registerList.size())
+        {
+            if (_registerList[registerAddress].bState != bState)
+            {
+                _registerList[registerAddress].bState = bState;
+
+                bChanged = true;
+            }
         }
+    }
+
+    if (bChanged)
+    {
+        emit dataChanged();
     }
 }
 
