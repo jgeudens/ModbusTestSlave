@@ -43,31 +43,45 @@
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBox_2">
+           <item row="3" column="0">
+            <widget class="QCheckBox" name="chkIllegalDataValue">
              <property name="text">
-              <string>CheckBox</string>
+              <string>IllegalDataValue (0x03)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="chkIllegalFunction">
+             <property name="text">
+              <string>Illegal Function (0x01)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QCheckBox" name="chkGatewayPathUnavailable">
+             <property name="text">
+              <string>GatewayPathUnavailable (0x0A)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QCheckBox" name="chkTargetNoResponse">
+             <property name="text">
+              <string>GatewayTargetDeviceFailedToResponse (0x0B)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="chkIllegalDataAddress">
+             <property name="text">
+              <string>IllegalDataAddress (0x02)</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBox_3">
+            <widget class="QCheckBox" name="chkNone">
              <property name="text">
-              <string>CheckBox</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="checkBox_4">
-             <property name="text">
-              <string>CheckBox</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="checkBox_5">
-             <property name="text">
-              <string>CheckBox</string>
+              <string>None</string>
              </property>
             </widget>
            </item>
@@ -82,10 +96,40 @@
          <string>Connection control</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
+         <item row="1" column="2">
+          <widget class="QPushButton" name="btnListen">
+           <property name="text">
+            <string>Listen</string>
+           </property>
+           <property name="default">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="1">
           <widget class="QSpinBox" name="spinSlaveId">
            <property name="value">
             <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="btnDisconnect">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Disconnect</string>
+           </property>
+           <property name="default">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Slave port</string>
            </property>
           </widget>
          </item>
@@ -119,36 +163,6 @@
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>Slave id</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Slave port</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btnListen">
-           <property name="text">
-            <string>Listen</string>
-           </property>
-           <property name="default">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="btnDisconnect">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Disconnect</string>
-           </property>
-           <property name="default">
-            <bool>true</bool>
            </property>
           </widget>
          </item>

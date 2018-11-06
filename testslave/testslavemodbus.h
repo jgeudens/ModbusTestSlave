@@ -15,15 +15,24 @@ public:
 
     bool connect(QUrl host, int slaveId);
 
+    void setException(QModbusPdu::ExceptionCode exception);
+
     bool readData(QModbusDataUnit *newData) const;
     bool setMap(const QModbusDataUnitMap &map);
     bool writeData(const QModbusDataUnit &newData);
+
+    QModbusResponse processRequest(const QModbusPdu &request);
+
+signals:
+    void requestProcessed();
 
 private:
 
     bool verifyValidHoldingRegister(const QModbusDataUnit *dataUnit) const;
 
     TestSlaveData *_pTestSlaveData;
+
+    QModbusPdu::ExceptionCode _exceptionCode;
 
 };
 

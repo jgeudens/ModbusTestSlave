@@ -28,6 +28,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_pSlaveModbus, &QModbusServer::stateChanged, this, &MainWindow::onStateChanged);
     connect(_pSlaveModbus, &QModbusServer::errorOccurred, this, &MainWindow::handleDeviceError);
 
+    /** Set exception group **/
+    _exceptionGroup.addButton(_pUi->chkNone, 0);
+    _exceptionGroup.addButton(_pUi->chkIllegalFunction, QModbusPdu::IllegalFunction);
+    _exceptionGroup.addButton(_pUi->chkIllegalDataAddress, QModbusPdu::IllegalDataAddress);
+    _exceptionGroup.addButton(_pUi->chkIllegalDataValue, QModbusPdu::IllegalDataValue);
+    _exceptionGroup.addButton(_pUi->chkTargetNoResponse, QModbusPdu::GatewayTargetDeviceFailedToRespond);
+    _exceptionGroup.addButton(_pUi->chkGatewayPathUnavailable, QModbusPdu::GatewayPathUnavailable);
+
+    connect(&_exceptionGroup, QOverload<int>::of(&QButtonGroup::buttonClicked),
+        [=](int id){
+        _pSlaveModbus->setException(static_cast<QModbusPdu::ExceptionCode>(id));
+        });
+
     /*** Auto increment ***/
     connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
     _autoIncTimer.start(1000);

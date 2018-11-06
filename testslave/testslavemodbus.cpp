@@ -20,6 +20,11 @@ bool TestSlaveModbus::connect(QUrl host, int slaveId)
     return connectDevice();
 }
 
+void TestSlaveModbus::setException(QModbusPdu::ExceptionCode exception)
+{
+    _exceptionCode = exception;
+}
+
 bool TestSlaveModbus::readData(QModbusDataUnit *newData) const
 {
     if (!verifyValidHoldingRegister(newData))
@@ -85,6 +90,23 @@ bool TestSlaveModbus::writeData(const QModbusDataUnit &newData)
     emit dataWritten(newData.registerType(), newData.startAddress(), newData.valueCount());
 
     return true;
+}
+
+QModbusResponse TestSlaveModbus::processRequest(const QModbusPdu &request)
+{
+    QModbusResponse response;
+    if (_exceptionCode == 0)
+    {
+        response = QModbusTcpServer::processRequest(request);
+    }
+    else
+    {
+        response = QModbusExceptionResponse(request.functionCode(), _exceptionCode);
+    }
+
+    emit requestProcessed();
+
+    return response;
 }
 
 bool TestSlaveModbus::verifyValidHoldingRegister(QModbusDataUnit const * dataUnit) const

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QButtonGroup>
 
 #include "testslavemodbus.h"
 #include "testslavedata.h"
@@ -38,6 +39,8 @@ private:
 
     QTimer _autoIncTimer;
     bool bAutoInc;
+
+    QButtonGroup _exceptionGroup;
 
     TestSlaveModbus *_pSlaveModbus;
     TestSlaveData *_pSlaveData;
