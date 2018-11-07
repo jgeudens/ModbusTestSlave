@@ -30,7 +30,6 @@ private slots:
     void handleDeviceError(QModbusDevice::Error newError);
     void onStateChanged(QModbusDevice::State state);
 
-    void handleAutoIncChanged(int state);
     void handleAutoIncTick();
 
 private:

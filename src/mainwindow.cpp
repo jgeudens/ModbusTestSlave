@@ -45,7 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
     _autoIncTimer.start(1000);
     _bAutoInc = false;
-    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this, &MainWindow::handleAutoIncChanged);
+    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged,
+        [=](int state){
+            _bAutoInc = (state == Qt::Checked);
+        });
 
     /*** Setup registerView **/
     _pUi->tblRegData->setModel(_pRegisterDataModel);
@@ -114,18 +117,6 @@ void MainWindow::onStateChanged(QModbusDevice::State state)
     _pUi->spinSlaveId->setEnabled(!connected);
     _pUi->spinSlavePort->setEnabled(!connected);
     _pUi->btnDisconnect->setEnabled(connected);
-}
-
-void MainWindow::handleAutoIncChanged(int state)
-{
-    if (state == Qt::Checked)
-    {
-        _bAutoInc = true;
-    }
-    else
-    {
-        _bAutoInc = false;
-    }
 }
 
 void MainWindow::handleAutoIncTick()
