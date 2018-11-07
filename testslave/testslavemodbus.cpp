@@ -4,6 +4,7 @@
 TestSlaveModbus::TestSlaveModbus(TestSlaveData *pTestSlaveData, QObject *parent) : QModbusTcpServer(parent)
 {
     _pTestSlaveData = pTestSlaveData;
+    _exceptionCode = static_cast<QModbusPdu::ExceptionCode>(0);
 }
 
 TestSlaveModbus::~TestSlaveModbus()

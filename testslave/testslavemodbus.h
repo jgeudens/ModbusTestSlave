@@ -17,14 +17,15 @@ public:
 
     void setException(QModbusPdu::ExceptionCode exception);
 
+signals:
+    void requestProcessed();
+
+protected:
     bool readData(QModbusDataUnit *newData) const;
     bool setMap(const QModbusDataUnitMap &map);
     bool writeData(const QModbusDataUnit &newData);
 
     QModbusResponse processRequest(const QModbusPdu &request);
-
-signals:
-    void requestProcessed();
 
 private:
 
