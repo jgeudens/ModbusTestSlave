@@ -9,7 +9,7 @@ class TestSlaveData : public QObject
 {
     Q_OBJECT
 public:
-    explicit TestSlaveData(quint32 registerCount = 100);
+    explicit TestSlaveData(quint32 registerCount = 50);
     ~TestSlaveData();
 
     uint size();
