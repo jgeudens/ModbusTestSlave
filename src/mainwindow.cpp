@@ -36,12 +36,27 @@ MainWindow::MainWindow(QWidget *parent) :
     _exceptionGroup.addButton(_pUi->chkTargetNoResponse, QModbusPdu::GatewayTargetDeviceFailedToRespond);
     _exceptionGroup.addButton(_pUi->chkGatewayPathUnavailable, QModbusPdu::GatewayPathUnavailable);
 
-    connect(&_exceptionGroup, QOverload<int>::of(&QButtonGroup::buttonClicked),
-        [=](int id){
-        _pSlaveModbus->setException(static_cast<QModbusPdu::ExceptionCode>(id));
+    connect(&_exceptionGroup, QOverload<int, bool>::of(&QButtonGroup::buttonToggled),
+        [=](int id, bool checked){
+            if (checked)
+            {
+                _pSlaveModbus->setException(static_cast<QModbusPdu::ExceptionCode>(id));
+            }
         });
 
-    /*** Auto increment ***/
+    /** Handle error recurrence group **/
+    _bErrorOnce = true;
+    _errorRecurrenceGroup.addButton(_pUi->optErrorOnce, true);
+    _errorRecurrenceGroup.addButton(_pUi->optErrorPersistent, false);
+
+    connect(&_errorRecurrenceGroup, QOverload<int>::of(&QButtonGroup::buttonClicked),
+        [=](int id){
+        _bErrorOnce = static_cast<bool>(id);
+        });
+
+    connect(_pSlaveModbus, &TestSlaveModbus::requestProcessed, this, &MainWindow::handleRequestProcessed);
+
+    /** Auto increment **/
     connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
     _autoIncTimer.start(1000);
     _bAutoInc = false;
@@ -50,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
             _bAutoInc = (state == Qt::Checked);
         });
 
-    /*** Setup registerView **/
+    /** Setup registerView **/
     _pUi->tblRegData->setModel(_pRegisterDataModel);
     _pUi->tblRegData->verticalHeader()->show();
     _pUi->tblRegData->horizontalHeader()->show(); // Not sure yet (show or not to show?)
@@ -124,5 +139,13 @@ void MainWindow::handleAutoIncTick()
     if (_bAutoInc)
     {
         _pSlaveData->incrementAllEnabledRegisters();
+    }
+}
+
+void MainWindow::handleRequestProcessed()
+{
+    if (_bErrorOnce)
+    {
+        _pUi->chkNone->animateClick(Qt::Checked);
     }
 }

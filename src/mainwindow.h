@@ -31,6 +31,7 @@ private slots:
     void onStateChanged(QModbusDevice::State state);
 
     void handleAutoIncTick();
+    void handleRequestProcessed();
 
 private:
 
@@ -39,7 +40,10 @@ private:
     QTimer _autoIncTimer;
     bool _bAutoInc;
 
+    bool _bErrorOnce;
+
     QButtonGroup _exceptionGroup;
+    QButtonGroup _errorRecurrenceGroup;
 
     TestSlaveModbus *_pSlaveModbus;
     TestSlaveData *_pSlaveData;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>584</height>
+    <height>628</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,9 @@
              </property>
              <property name="text">
               <string>Once</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -85,6 +88,9 @@
             <widget class="QCheckBox" name="chkNone">
              <property name="text">
               <string>None</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
