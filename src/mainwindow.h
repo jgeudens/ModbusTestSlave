@@ -38,7 +38,7 @@ private:
     Ui::MainWindow *_pUi;
 
     QTimer _autoIncTimer;
-    bool bAutoInc;
+    bool _bAutoInc;
 
     QButtonGroup _exceptionGroup;
 

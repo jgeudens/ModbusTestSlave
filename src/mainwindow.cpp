@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /*** Auto increment ***/
     connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
     _autoIncTimer.start(1000);
-    bAutoInc = false;
+    _bAutoInc = false;
     connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this, &MainWindow::handleAutoIncChanged);
 
     /*** Setup registerView **/
@@ -120,17 +120,17 @@ void MainWindow::handleAutoIncChanged(int state)
 {
     if (state == Qt::Checked)
     {
-        bAutoInc = true;
+        _bAutoInc = true;
     }
     else
     {
-        bAutoInc = false;
+        _bAutoInc = false;
     }
 }
 
 void MainWindow::handleAutoIncTick()
 {
-    if (bAutoInc)
+    if (_bAutoInc)
     {
         _pSlaveData->incrementAllEnabledRegisters();
     }
