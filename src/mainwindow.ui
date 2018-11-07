@@ -14,7 +14,7 @@
    <string>Modbus Test Server</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -43,45 +43,52 @@
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="3" column="0">
+           <item row="4" column="0">
             <widget class="QCheckBox" name="chkIllegalDataValue">
              <property name="text">
               <string>IllegalDataValue (0x03)</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QCheckBox" name="chkIllegalFunction">
              <property name="text">
               <string>Illegal Function (0x01)</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="5" column="0">
             <widget class="QCheckBox" name="chkGatewayPathUnavailable">
              <property name="text">
               <string>GatewayPathUnavailable (0x0A)</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="6" column="0">
             <widget class="QCheckBox" name="chkTargetNoResponse">
              <property name="text">
               <string>GatewayTargetDeviceFailedToResponse (0x0B)</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <widget class="QCheckBox" name="chkIllegalDataAddress">
              <property name="text">
               <string>IllegalDataAddress (0x02)</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QCheckBox" name="chkNone">
              <property name="text">
               <string>None</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="Line" name="line">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -106,10 +113,23 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="spinSlaveId">
-           <property name="value">
-            <number>1</number>
+         <item row="3" column="1">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Slave id</string>
            </property>
           </widget>
          </item>
@@ -126,10 +146,30 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinSlavePort">
+           <property name="minimum">
+            <number>256</number>
+           </property>
+           <property name="maximum">
+            <number>65535</number>
+           </property>
+           <property name="value">
+            <number>5020</number>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
             <string>Slave port</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="spinSlaveId">
+           <property name="value">
+            <number>1</number>
            </property>
           </widget>
          </item>
@@ -145,26 +185,6 @@
             </size>
            </property>
           </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spinSlavePort">
-           <property name="minimum">
-            <number>256</number>
-           </property>
-           <property name="maximum">
-            <number>65535</number>
-           </property>
-           <property name="value">
-            <number>5020</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Slave id</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
@@ -182,6 +202,13 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Register data</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="checkAutoIncrement">
            <property name="text">
@@ -189,15 +216,15 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="0">
+          <widget class="QTableView" name="tblRegData"/>
+         </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Register data</string>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QTableView" name="tblRegData"/>
          </item>
         </layout>
        </item>
