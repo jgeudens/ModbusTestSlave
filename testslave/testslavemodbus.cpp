@@ -42,7 +42,7 @@ bool TestSlaveModbus::readData(QModbusDataUnit *newData) const
             return false;
         }
 
-        newData->setValue(regAddress, _pTestSlaveData->registerValue(regAddress));
+        newData->setValue(idx, _pTestSlaveData->registerValue(regAddress));
     }
 
     return true;
