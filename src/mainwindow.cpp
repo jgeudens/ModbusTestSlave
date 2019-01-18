@@ -72,6 +72,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Don't stretch columns, resize to contents */
     _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    QString debugTxt;
+#ifdef DEBUG
+    debugTxt = QString(tr(" beta (git %1:%2)")).arg(GIT_BRANCH).arg(GIT_HASH);
+#endif
+
+    QString windowCaption;
+    windowCaption = QString("ModbusTestSlave %1%2").arg(APP_VERSION).arg(debugTxt);
+
+    setWindowTitle(windowCaption);
 }
 
 MainWindow::~MainWindow()
