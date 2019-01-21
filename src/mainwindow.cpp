@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     QString windowCaption;
-    windowCaption = QString("ModbusTestSlave %1%2").arg(APP_VERSION).arg(debugTxt);
+    windowCaption = QString("ModbusTestSlave v%1%2").arg(APP_VERSION).arg(debugTxt);
 
     setWindowTitle(windowCaption);
 }
