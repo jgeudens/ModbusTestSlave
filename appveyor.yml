@@ -26,5 +26,5 @@ build_script:
   - cmd: mingw32-make -j2
 
 artifacts:
- - path: build\src\release\ModbusTestSlave.exe
+ - path: build\release\ModbusTestSlave.exe
 
