@@ -1,30 +1,38 @@
 version: '{branch}_{build}'
+image: Visual Studio 2019
 
 platform:
   - x64
 
 install:
+  - cmd: set PATH=C:\Qt\5.12.6\mingw73_64\bin;%PATH%
+#  - cmd: windeployqt.exe (return code isn't correct)
+  
+  - cmd: set PATH=C:\Qt\Tools\mingw730_64\bin;%PATH%
+  - cmd: g++ -v
+
+  # Remove git sh.exe from PATH (required for CMAKE)
+  - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
+  - cmd: cmake --version
+  
+  - cmd: echo %PATH%
+
+build_script:
   - cmd: mkdir build
   - cmd: cd build
   
-  - cmd: SET QTDIR=C:\Qt_Static
-  - cmd: echo %QTDIR%
-  
-  - cmd: curl -fsSL "https://dl.bintray.com/jgeudens/Static-Qt/Qt_Static_5.9.7.zip" -o Qt_Static.zip
-  
-  - cmd: 7z x Qt_Static.zip -o%QTDIR% -y > null
-  
-  - cmd: set PATH=%QTDIR%\bin;%PATH%
-  - cmd: set PATH=C:\Qt\Tools\mingw530_32\bin;%PATH%
-  - cmd: echo %PATH%
-  
-build_script:
-  - cmd: qmake --version
-  - cmd: SET QMAKESPEC=win32-g++
-  
-  - cmd: qmake ..\ModbusTestSlave.pro
+  - cmd: cmake .. -G "MinGW Makefiles"
   - cmd: mingw32-make -j2
 
-artifacts:
- - path: build\release\ModbusTestSlave.exe
+  - cmd: mkdir deploy
+  - cmd: copy ModbusTestSlave.exe deploy
+  - cmd: cd deploy
+  - cmd: windeployqt.exe ModbusTestSlave.exe --release --compiler-runtime -verbose 2
+  
+  # Back to build dir
+  - cmd: cd ..
+  
+  - cmd: 7z a ModbusTestSlave.zip ".\deploy\*"
 
+artifacts:
+ - path: build\ModbusTestSlave.zip
