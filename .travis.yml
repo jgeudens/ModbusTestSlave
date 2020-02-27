@@ -1,0 +1,27 @@
+
+language: cpp
+sudo: required
+dist: bionic
+compiler: gcc
+
+before_install:
+  - sudo add-apt-repository ppa:beineri/opt-qt-5.12.6-bionic -y
+  - sudo apt update -qq
+
+install:
+  # install CMake
+  - sudo apt install -qq cmake
+  - cmake -version
+  
+  # Dependency for Qt
+  - sudo apt -qq install mesa-common-dev libglu1-mesa-dev
+  
+  # Install Qt
+  - sudo apt -qq install qt512-meta-minimal qt512serialbus
+  
+  # Setup Qt env
+  - source /opt/qt512/bin/qt512-env.sh
+
+script:
+  - cmake .
+  - make -j4
