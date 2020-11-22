@@ -5,10 +5,10 @@ platform:
   - x64
 
 install:
-  - cmd: set PATH=C:\Qt\5.12.6\mingw73_64\bin;%PATH%
+  - cmd: set PATH=C:\Qt\5.15\mingw81_64\bin;%PATH%
 #  - cmd: windeployqt.exe (return code isn't correct)
   
-  - cmd: set PATH=C:\Qt\Tools\mingw730_64\bin;%PATH%
+  - cmd: set PATH=C:\Qt\Tools\mingw810_64\bin;%PATH%
   - cmd: g++ -v
 
   # Remove git sh.exe from PATH (required for CMAKE)
@@ -27,7 +27,7 @@ build_script:
   - cmd: mkdir deploy
   - cmd: copy ModbusTestSlave.exe deploy
   - cmd: cd deploy
-  - cmd: windeployqt.exe ModbusTestSlave.exe --release --compiler-runtime -verbose 2
+  - cmd: windeployqt.exe ModbusTestSlave.exe --compiler-runtime -verbose 2
   
   # Back to build dir
   - cmd: cd ..
