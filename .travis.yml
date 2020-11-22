@@ -20,8 +20,8 @@ install:
   - sudo apt -qq install qt512-meta-minimal qt512serialbus
   
   # Setup Qt env
-  - source /opt/qt512/bin/qt512-env.sh
+  - source /opt/qt*/bin/qt*-env.sh
 
 script:
   - cmake .
-  - make -j4
+  - make -j$(nproc)
