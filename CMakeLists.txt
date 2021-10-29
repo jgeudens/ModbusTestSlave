@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(ModbusTestSlave
+project(ModbusSim
     LANGUAGES CXX
     DESCRIPTION "Test module to test Modbus communication"
     VERSION 0.0.0
@@ -8,9 +8,14 @@ project(ModbusTestSlave
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# As moc files are generated in the binary dir, tell CMake
+# to always look for includes there:
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Tell CMake to run moc when necessary:
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -27,31 +32,18 @@ find_package(Qt5 COMPONENTS
     REQUIRED
 )
 
-set(QT_INCLUDES
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${Qt5Xml_INCLUDE_DIRS}
-    ${Qt5Network_INCLUDE_DIRS}
-    ${Qt5SerialBus_INCLUDE_DIRS}
-)
-
 set(QT_LIB
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::Xml
-    Qt5::PrintSupport
-    Qt5::Network
-    Qt5::SerialBus
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
+    Qt::Xml
+    Qt::PrintSupport
+    Qt::Network
+    Qt::SerialBus
 )
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/testslave
-
-    ${QT_INCLUDES}
-)
+include_directories(SYSTEM ${QT_INCLUDES})
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/testslave)
 
 SET(APP_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
@@ -68,18 +60,34 @@ SET(TESTSLAVE_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/testslave/testslavemodbus.cpp
 )
 
-# Default GUI type is blank
-set(GUI_TYPE "")
-
+# set platform specific for compilation
 if(WIN32)
-    set(GUI_TYPE WIN32)
-endif()
+    set(target_dir "bin/win")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(target_dir "bin/linux")
+else()
+        message(SEND_ERROR "You are on an unsupported platform! (Not Win, Mac OS X or Unix)")
+endif(WIN32)
 
 add_executable(${PROJECT_NAME} ${GUI_TYPE} ${APP_SRCS} ${APP_UIS} ${TESTSLAVE_SRCS})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${QT_LIB}
-)
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
 
-# Reset GUI type to blank
-set(GUI_TYPE "")
+target_link_libraries(${PROJECT_NAME} ${QT_LIB})
+
+# Do platform specific post target stuff
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
+    message(WARNING ${PROJECT_SOURCE_DIR}/misc/${PROJECT_NAME}.desktop)
+
+    install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+
+    # Install desktop entry
+    install(FILES ${PROJECT_SOURCE_DIR}/misc/${PROJECT_NAME}.desktop DESTINATION bin )
+
+    # Install icon
+    #install(FILES misc/${PROJECT_NAME}.png DESTINATION share/icons/pixmaps/)
+
+elseif(WIN32)
+    # not required
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")

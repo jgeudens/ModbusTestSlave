@@ -1,0 +1,39 @@
+name: Build
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 5.15.2
+
+      - name: Update Modules and Build
+        run: sh scripts/build_unix_github.sh
+
+      #- name: Install more libs
+      #  run: sudo apt-get install -y libxcb-icccm4 libxcb*
+
+  windows:
+    runs-on: windows-2019
+    
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 5.15.2
+
+      - name: Update Modules and Build
+        run: scripts/build_windows_mingw.bat
+
