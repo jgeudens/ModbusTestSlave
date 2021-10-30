@@ -18,6 +18,9 @@ jobs:
         with:
           version: 5.15.2
 
+      - name: Install toolchain dependencies
+        run: sudo apt-get install ninja-build
+
       - name: Update Modules and Build
         run: sh scripts/build_unix_github.sh
 
