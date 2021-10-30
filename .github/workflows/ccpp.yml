@@ -22,7 +22,7 @@ jobs:
         run: sudo apt-get install ninja-build
 
       - name: Update Modules and Build
-        run: sh scripts/build_unix_github.sh
+        run: sh scripts/build_linux.sh
 
   windows:
     runs-on: windows-2019
@@ -39,10 +39,10 @@ jobs:
           arch: win64_mingw81
 
       - name: Install toolchain dependencies
-        run: choco install ninja cmake
+        run: choco install ninja
 
       - name: Update Modules and Build
-        run: scripts/build_windows_mingw.bat
+        run: scripts/build_windows.bat
 
       - name: Deploy
         run: scripts/deploy_windows.bat
@@ -50,4 +50,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: release\bin\win\Release\ModbusSim.zip
+          path: release\bin\win\ModbusSim.zip
