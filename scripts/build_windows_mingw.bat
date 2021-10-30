@@ -1,11 +1,10 @@
 echo on
 
-SET project_dir="%cd%"
 echo Building ModbusSim using MinGW ...
-mkdir build_windows
-cd build_windows
+mkdir release
+cd release
 
-cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
-cmake --build . --config Release
+cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ..
 
-cd ..
+ninja
+

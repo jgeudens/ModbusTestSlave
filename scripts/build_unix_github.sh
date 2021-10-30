@@ -7,5 +7,5 @@ export CC="gcc-9"
 mkdir -p release
 cd release
 
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -GNinja -DCMAKE_BUILD_TYPE=Release .. 
 ninja
