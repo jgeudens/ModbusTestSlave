@@ -24,6 +24,14 @@ jobs:
       - name: Update Modules and Build
         run: sh scripts/build_linux.sh
 
+      - name: Deploy
+        run: scripts/deploy_linux.sh
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: modbussim-linux
+          path: release\bin\linux\ModbusSim-x86_64.AppImage
+
   windows:
     runs-on: windows-2019
     
@@ -49,5 +57,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: modbussim-windows
           path: release\bin\win\ModbusSim.zip
