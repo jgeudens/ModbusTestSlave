@@ -1,4 +1,5 @@
-echo on
+#!/bin/bash
+set -ex
 
 # now, build AppImage using linuxdeploy and linuxdeploy-plugin-qt
 # download linuxdeploy and its Qt plugin
