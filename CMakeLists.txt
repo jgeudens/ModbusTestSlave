@@ -69,24 +69,16 @@ else()
         message(SEND_ERROR "You are on an unsupported platform! (Not Win, Mac OS X or Unix)")
 endif(WIN32)
 
-add_executable(${PROJECT_NAME} ${GUI_TYPE} ${APP_SRCS} ${APP_UIS} ${TESTSLAVE_SRCS})
+add_executable(modbussim ${GUI_TYPE} ${APP_SRCS} ${APP_UIS} ${TESTSLAVE_SRCS})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
+set_target_properties(modbussim PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
 
-target_link_libraries(${PROJECT_NAME} ${QT_LIB})
+target_link_libraries(modbussim ${QT_LIB})
 
 # Do platform specific post target stuff
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-    message(WARNING ${PROJECT_SOURCE_DIR}/misc/${PROJECT_NAME}.desktop)
-
-    install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-
-    # Install desktop entry
-    install(FILES ${PROJECT_SOURCE_DIR}/misc/${PROJECT_NAME}.desktop DESTINATION bin )
-
-    # Install icon
-    #install(FILES misc/${PROJECT_NAME}.png DESTINATION share/icons/pixmaps/)
+    install(TARGETS modbussim RUNTIME DESTINATION bin)
 
 elseif(WIN32)
     # not required

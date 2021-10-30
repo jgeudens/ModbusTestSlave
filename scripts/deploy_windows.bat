@@ -8,7 +8,7 @@ mkdir ModbusSim
 copy modbussim.exe ModbusSim
 
 cd ModbusSim
-windeployqt.exe ModbusSim.exe --compiler-runtime -verbose 2
+windeployqt.exe modbussim.exe --compiler-runtime -verbose 2
 
 REM Back to build dir
 cd ..
