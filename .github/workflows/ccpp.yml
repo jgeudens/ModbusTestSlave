@@ -39,6 +39,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           version: 5.15.2
+          arch: win64_mingw81
 
       - name: Install toolchain dependencies
         run: choco install ninja cmake
