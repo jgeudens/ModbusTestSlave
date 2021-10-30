@@ -40,6 +40,9 @@ jobs:
         with:
           version: 5.15.2
 
+      - name: Install toolchain dependencies
+        run: choco install ninja cmake
+
       - name: Update Modules and Build
         run: scripts/build_windows_mingw.bat
 
