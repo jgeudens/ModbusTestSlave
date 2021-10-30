@@ -7,4 +7,4 @@ cd release
 cmake -GNinja -DCMAKE_BUILD_TYPE=Release .. 
 ninja
 
-cmake --install ..
+cmake --install .
