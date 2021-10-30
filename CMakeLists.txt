@@ -49,10 +49,10 @@ SET(APP_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/registerdatamodel.cpp
-)
 
-SET(APP_UIS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.ui
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/app_icon.rc
 )
 
 SET(TESTSLAVE_SRCS
@@ -69,7 +69,7 @@ else()
         message(SEND_ERROR "You are on an unsupported platform! (Not Win, Mac OS X or Unix)")
 endif(WIN32)
 
-add_executable(modbussim ${GUI_TYPE} ${APP_SRCS} ${APP_UIS} ${TESTSLAVE_SRCS})
+add_executable(modbussim ${APP_SRCS} ${TESTSLAVE_SRCS})
 
 set_target_properties(modbussim PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
 
