@@ -30,7 +30,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: modbussim-linux
-          path: release\bin\linux\ModbusSim-*-x86_64.AppImage
+          path: release/bin/linux/ModbusSim*.AppImage
 
   windows:
     runs-on: windows-2019
