@@ -16,3 +16,5 @@ chmod +x linuxdeploy*.AppImage
 
 # Generate AppImage
 ./linuxdeploy-x86_64.AppImage --appdir AppDir -e modbussim -i ModbusSim.png -d ModbusSim.desktop --plugin qt --output appimage
+
+ls
