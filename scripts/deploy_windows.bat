@@ -4,6 +4,9 @@ echo "Deploy ModbusSim ..."
 
 cd release\bin\win
 
+echo %PATH%
+g++ -v
+
 mkdir ModbusSim
 copy modbussim.exe ModbusSim
 
