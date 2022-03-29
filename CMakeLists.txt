@@ -1,16 +1,12 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(ModbusSim
     LANGUAGES CXX
-    DESCRIPTION "Test module to test Modbus communication"
+    DESCRIPTION "Modbus Slave Simulation"
     VERSION 0.0.0
 )
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# As moc files are generated in the binary dir, tell CMake
-# to always look for includes there:
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -60,25 +56,34 @@ SET(TESTSLAVE_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/testslave/testslavemodbus.cpp
 )
 
-# set platform specific for compilation
+# Default GUI type is blank
+set(GUI_TYPE "")
+
 if(WIN32)
+    set(GUI_TYPE WIN32)
     set(target_dir "bin/win")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(target_dir "bin/linux")
 else()
-        message(SEND_ERROR "You are on an unsupported platform! (Not Win, Mac OS X or Unix)")
+    message(SEND_ERROR "You are on an unsupported platform! (Not Win or Unix)")
 endif(WIN32)
 
-add_executable(modbussim ${APP_SRCS} ${TESTSLAVE_SRCS})
+add_executable(${PROJECT_NAME} ${GUI_TYPE} ${APP_SRCS} ${TESTSLAVE_SRCS})
 
-set_target_properties(modbussim PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir} )
 
-target_link_libraries(modbussim ${QT_LIB})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    ${SCOPESOURCE}
+    ${QT_LIB}
+)
+
+# Reset GUI type to blank
+set(GUI_TYPE "")
 
 # Do platform specific post target stuff
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-    install(TARGETS modbussim RUNTIME DESTINATION bin)
+    install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 
 elseif(WIN32)
     # not required

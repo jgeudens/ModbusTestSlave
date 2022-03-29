@@ -1,18 +1,27 @@
 echo on
 
-echo "Deploy ModbusSim ..."
+echo "Deploy ModbusScope ..."
 
-cd release\bin\win
-
-echo %PATH%
 g++ -v
 
-mkdir ModbusSim
-copy modbussim.exe ModbusSim
+cd release\src\bin\win
+IF ERRORLEVEL 1 GOTO errorHandling
 
-cd ModbusSim
+set DEPLOY_DIR=deploy
+
+mkdir %DEPLOY_DIR%
+copy modbussim.exe %DEPLOY_DIR%
+IF ERRORLEVEL 1 GOTO errorHandling
+
+cd %DEPLOY_DIR%
 windeployqt.exe modbussim.exe --compiler-runtime -verbose 2
+IF ERRORLEVEL 1 GOTO errorHandling
 
-REM Back to build dir
 cd ..
-7z a ModbusSim.zip ModbusSim
+7z a ModbusSim.zip ".\%DEPLOY_DIR%\*"
+IF ERRORLEVEL 1 GOTO errorHandling
+
+EXIT
+
+:errorHandling
+EXIT /B 1
