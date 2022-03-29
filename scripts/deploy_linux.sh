@@ -2,9 +2,9 @@
 set -ex
 
 # Copy assets
-cp misc/ModbusSim.desktop release/src/bin/linux/
-cp misc/icon-64x64.png release/src/bin/linux/ModbusSim.png
-cd release/src/bin/linux/
+cp misc/ModbusSim.desktop release/bin/linux/
+cp misc/icon-64x64.png release/bin/linux/ModbusSim.png
+cd release/bin/linux/
 
 # now, build AppImage using linuxdeploy and linuxdeploy-plugin-qt
 # download linuxdeploy and its Qt plugin

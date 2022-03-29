@@ -4,7 +4,7 @@ echo "Deploy ModbusScope ..."
 
 g++ -v
 
-cd release\src\bin\win
+cd release\bin\win
 IF ERRORLEVEL 1 GOTO errorHandling
 
 set DEPLOY_DIR=deploy
