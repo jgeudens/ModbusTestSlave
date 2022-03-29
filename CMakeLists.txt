@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(ModbusSim
+project(modbussim
     LANGUAGES CXX
     DESCRIPTION "Modbus Slave Simulation"
     VERSION 0.0.0
