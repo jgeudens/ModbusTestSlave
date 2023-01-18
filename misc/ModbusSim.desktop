@@ -1,0 +1,11 @@
+#!/usr/bin/xdg-open
+[Desktop Entry]
+Comment=ModbusSim - Simulation modbus slave
+Exec=modbussim
+GenericName=ModbusSim
+Icon=ModbusSim
+MimeType=
+Name=ModbusSim
+Terminal=false
+Type=Application
+Categories=Utility
