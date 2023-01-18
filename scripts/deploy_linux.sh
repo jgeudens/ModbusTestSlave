@@ -19,3 +19,5 @@ export APPIMAGE_EXTRACT_AND_RUN=1 # Workaround because FUSE isn't available in D
 ./linuxdeploy-x86_64.AppImage --appdir AppDir -e modbussim -i ModbusSim.png -d ModbusSim.desktop --plugin qt --output appimage
 
 ls
+
+cp ModbusSim*.AppImage ../../..
