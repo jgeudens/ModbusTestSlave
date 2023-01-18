@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _exceptionGroup.addButton(_pUi->chkTargetNoResponse, QModbusPdu::GatewayTargetDeviceFailedToRespond);
     _exceptionGroup.addButton(_pUi->chkGatewayPathUnavailable, QModbusPdu::GatewayPathUnavailable);
 
-    connect(&_exceptionGroup, QOverload<int, bool>::of(&QButtonGroup::buttonToggled),
+    connect(&_exceptionGroup, QOverload<int, bool>::of(&QButtonGroup::idToggled), this,
         [=](int id, bool checked){
             if (checked)
             {
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _errorRecurrenceGroup.addButton(_pUi->optErrorOnce, true);
     _errorRecurrenceGroup.addButton(_pUi->optErrorPersistent, false);
 
-    connect(&_errorRecurrenceGroup, QOverload<int>::of(&QButtonGroup::buttonClicked),
+    connect(&_errorRecurrenceGroup, QOverload<int>::of(&QButtonGroup::idClicked), this,
         [=](int id){
         _bErrorOnce = static_cast<bool>(id);
         });
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
     _autoIncTimer.start(1000);
     _bAutoInc = false;
-    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged,
+    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this,
         [=](int state){
             _bAutoInc = (state == Qt::Checked);
         });
@@ -151,6 +151,6 @@ void MainWindow::handleRequestProcessed()
 {
     if (_bErrorOnce)
     {
-        _pUi->chkNone->animateClick(Qt::Checked);
+        _pUi->chkNone->click();
     }
 }

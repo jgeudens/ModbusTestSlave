@@ -11,17 +11,19 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Tell CMake to run moc when necessary:
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS
-    Core
-    Gui
+# Find the QtCore library
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+
+message(STATUS "Using Qt${QT_VERSION_MAJOR} version ${Qt${QT_VERSION_MAJOR}Core_VERSION}")
+
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Widgets
     Xml
-    PrintSupport
     Network
     SerialBus
 
@@ -29,17 +31,16 @@ find_package(Qt5 COMPONENTS
 )
 
 set(QT_LIB
-    Qt::Core
-    Qt::Gui
     Qt::Widgets
     Qt::Xml
-    Qt::PrintSupport
     Qt::Network
     Qt::SerialBus
 )
 
-include_directories(SYSTEM ${QT_INCLUDES})
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/testslave)
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/testslave
+)
 
 SET(APP_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
