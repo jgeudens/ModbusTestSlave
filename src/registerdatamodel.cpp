@@ -49,6 +49,10 @@ QVariant RegisterDataModel::data(const QModelIndex &index, int role) const
         {
             return QString("%0").arg(registerAddress + 40001);
         }
+        else
+        {
+            return QVariant();
+        }
     }
     else if (role == Qt::CheckStateRole)
     {
@@ -101,7 +105,7 @@ bool RegisterDataModel::setData(const QModelIndex &index, const QVariant &value,
     }
     else if (role == Qt::EditRole)
     {
-        if (value.canConvert(QMetaType::UInt))
+        if (value.canConvert(QMetaType(QMetaType::UInt)))
         {
             _pTestSlaveData->setRegisterValue(registerAddress, value.toUInt());
         }

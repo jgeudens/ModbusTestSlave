@@ -4,38 +4,47 @@ name: Build
 on: push
 
 jobs:
-
   linux:
-    runs-on: ubuntu-20.04
-    container: docker://jgeudens/qt-linux:5.15.2_build_1
+    runs-on: ubuntu-latest
+
+    container:
+      image: docker://jgeudens/qt-linux:6.4.1_build_1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Update Modules and Build
-        run: sh scripts/build_linux.sh
+        run: bash scripts/build_linux.sh
 
       - name: Deploy
-        run: sh scripts/deploy_linux.sh
+        run: bash scripts/deploy_linux.sh
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: modbussim-linux
-          path: release/bin/linux/ModbusSim*.AppImage
+          path: ModbusSim*.AppImage
 
   windows:
     runs-on: windows-2019
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Qt installer
         run: pip3 install aqtinstall
 
+      # Cache go build cache, used to speedup go test
+      - name: Qt Build Cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ github.workspace }}\Qt
+          key: ${{ runner.os }}-qt-build-${{ hashFiles('scripts\setup_windows.bat') }}
+
       - name: Setup, build and deploy
         shell: cmd
-        run: scripts/full_build_and_deploy_windows.bat ${{ github.workspace }}
+        run: scripts\full_build_and_deploy_windows.bat '${{ steps.cache.outputs.cache-hit }}' ${{ github.workspace }}\Qt
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: modbussim-windows
           path: |
