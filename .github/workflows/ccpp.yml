@@ -8,33 +8,36 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: docker://jgeudens/qt-linux:6.4.1_build_1
+      image: docker://jgeudens/qt-linux:6.8.3_build_1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6.0.0
 
+      - name: Configure safe directory for git
+        run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
+      
       - name: Update Modules and Build
         run: bash scripts/build_linux.sh
 
       - name: Deploy
         run: bash scripts/deploy_linux.sh
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5.0.0
         with:
           name: modbussim-linux
           path: ModbusSim*.AppImage
 
   windows:
-    runs-on: windows-2019
+    runs-on: windows-2022
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6.0.0
 
       - name: Install Qt installer
-        run: pip3 install aqtinstall
+        run: pip3 install aqtinstall==3.3.0
 
       # Cache go build cache, used to speedup go test
       - name: Qt Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5.0.0
         id: cache
         with:
           path: ${{ github.workspace }}\Qt
@@ -44,8 +47,8 @@ jobs:
         shell: cmd
         run: scripts\full_build_and_deploy_windows.bat '${{ steps.cache.outputs.cache-hit }}' ${{ github.workspace }}\Qt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5.0.0
         with:
-          name: modbussim-windows
+          name: modbusscope-windows
           path: |
-            release\bin\win\ModbusSim.zip
+            ModbusSim.zip

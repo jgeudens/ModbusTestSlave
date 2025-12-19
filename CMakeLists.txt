@@ -8,15 +8,14 @@ project(modbussim
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Find the QtCore library
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 message(STATUS "Using Qt${QT_VERSION_MAJOR} version ${Qt${QT_VERSION_MAJOR}Core_VERSION}")
@@ -30,6 +29,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     REQUIRED
 )
 
+qt_standard_project_setup()
+
 set(QT_LIB
     Qt::Widgets
     Qt::Xml
@@ -41,6 +42,13 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/testslave
 )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+if (MINGW)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wa,-mbig-obj")
+endif()
 
 SET(APP_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
@@ -91,3 +99,4 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 elseif(WIN32)
     # not required
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
