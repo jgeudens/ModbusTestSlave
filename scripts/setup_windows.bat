@@ -9,7 +9,7 @@ echo QT_INSTALL_DIR: %QT_INSTALL_DIR%
 echo CACHE_HIT: %CACHE_HIT%
 
 REM Set configuration
-set QT=6.4.1
+set QT=6.8.3
 set QT_MODULES=qtserialbus qtserialport
 set QT_HOST=windows
 set QT_TARGET=desktop
@@ -28,10 +28,11 @@ REM Install Qt
 aqt install-qt --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% %QT% %QT_ARCH%  -m %QT_MODULES%
 
 REM Install Tools
-aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_mingw90 qt.tools.win64_mingw900
+REM Qt 6.8.x uses mingw 13.1.0 (GCC 13.1.0) (https://wiki.qt.io/MinGW)
+aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_mingw1310
 aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_cmake
 aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_ninja
-aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_openssl_x64
+aqt install-tool --outputdir %QT_INSTALL_DIR% %QT_HOST% %QT_TARGET% tools_opensslv3_x64
 
 :cache_hit
 
@@ -41,7 +42,7 @@ dir %QT_INSTALL_DIR%\Tools
 
 REM Set env variables with path
 set "PATH=%QT_INSTALL_DIR%\%QT%\%QT_ARCH_PATH%\bin;%PATH%"
-set "PATH=%QT_INSTALL_DIR%\Tools\mingw1120_64\bin;%PATH%"
+set "PATH=%QT_INSTALL_DIR%\Tools\mingw1310_64\bin;%PATH%"
 set "PATH=%QT_INSTALL_DIR%\Tools\CMake_64\bin;%PATH%"
 set "PATH=%QT_INSTALL_DIR%\Tools\Ninja;%PATH%"
 
@@ -50,4 +51,4 @@ set "QML_IMPORT_PATH=%QT_INSTALL_DIR%\%QT%\%QT_ARCH_PATH%\qml\"
 set "QML2_IMPORT_PATH=%QT_INSTALL_DIR%\%QT%\%QT_ARCH_PATH%\qml\"
 set "CMAKE_PREFIX_PATH=%QT_INSTALL_DIR%\%QT%\%QT_ARCH_PATH%\lib\cmake\Qt6"
 
-set "OPENSSL_DIR=%QT_INSTALL_DIR%\Tools\OpenSSL\Win_x64\bin"
+set "OPENSSL_DIR=%QT_INSTALL_DIR%\Tools\OpenSSLv3\Win_x64\bin"

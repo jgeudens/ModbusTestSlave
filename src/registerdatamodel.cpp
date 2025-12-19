@@ -42,7 +42,7 @@ int RegisterDataModel::columnCount(const QModelIndex & /*parent*/) const
 
 QVariant RegisterDataModel::data(const QModelIndex &index, int role) const
 {
-    const int registerAddress = index.row() * _cRegistersPerRow + index.column();
+    const uint registerAddress = index.row() * _cRegistersPerRow + index.column();
     if (role == Qt::ToolTipRole)
     {
         if (registerAddress < _pTestSlaveData->size())
@@ -84,7 +84,7 @@ Qt::ItemFlags RegisterDataModel::flags(const QModelIndex & index) const
 
     Qt::ItemFlags flags = Qt::NoItemFlags;
 
-    const int registerAddress = index.row() * _cRegistersPerRow + index.column();
+    const uint registerAddress = index.row() * _cRegistersPerRow + index.column();
 
     if (registerAddress < _pTestSlaveData->size())
     {

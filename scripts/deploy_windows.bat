@@ -21,6 +21,9 @@ cd ..
 7z a ModbusSim.zip ".\%DEPLOY_DIR%\*"
 IF ERRORLEVEL 1 GOTO errorHandling
 
+cd ..\..\..
+move release\bin\win\ModbusSim.zip ModbusSim.zip
+
 EXIT
 
 :errorHandling
