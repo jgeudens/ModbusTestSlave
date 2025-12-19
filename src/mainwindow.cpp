@@ -37,12 +37,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _exceptionGroup.addButton(_pUi->chkGatewayPathUnavailable, QModbusPdu::GatewayPathUnavailable);
 
     connect(&_exceptionGroup, QOverload<int, bool>::of(&QButtonGroup::idToggled), this,
-        [=](int id, bool checked){
-            if (checked)
-            {
-                _pSlaveModbus->setException(static_cast<QModbusPdu::ExceptionCode>(id));
-            }
-        });
+            [=, this](int id, bool checked) {
+                if (checked)
+                {
+                    _pSlaveModbus->setException(static_cast<QModbusPdu::ExceptionCode>(id));
+                }
+            });
 
     /** Handle error recurrence group **/
     _bErrorOnce = true;
@@ -50,19 +50,17 @@ MainWindow::MainWindow(QWidget *parent) :
     _errorRecurrenceGroup.addButton(_pUi->optErrorPersistent, false);
 
     connect(&_errorRecurrenceGroup, QOverload<int>::of(&QButtonGroup::idClicked), this,
-        [=](int id){
-        _bErrorOnce = static_cast<bool>(id);
-        });
+            [=, this](int id) { _bErrorOnce = static_cast<bool>(id); });
 
     connect(_pSlaveModbus, &TestSlaveModbus::requestProcessed, this, &MainWindow::handleRequestProcessed);
 
     /** Auto increment **/
     _bAutoInc = false;
-    connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this,
-        [=](int state){
-            _bAutoInc = (state == Qt::Checked);
-            _pIncGraph->setState(_bAutoInc);
-        });
+
+    connect(_pUi->checkAutoIncrement, &QCheckBox::checkStateChanged, this, [this](Qt::CheckState state) {
+        _bAutoInc = state;
+        _pIncGraph->setState(_bAutoInc);
+    });
 
     /** Setup registerView **/
     _pUi->tblRegData->setModel(_pRegisterDataModel);
