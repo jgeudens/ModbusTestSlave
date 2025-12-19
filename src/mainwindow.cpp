@@ -64,8 +64,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), _pUi(new Ui::Main
     _pUi->tblRegData->setModel(_pRegisterDataModel);
     _pUi->tblRegData->verticalHeader()->show();
     _pUi->tblRegData->horizontalHeader()->show();
-
-    /* Don't stretch columns, resize to contents */
     _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QList<uint> registerList = QList<uint>() << 0 << 1 << 2 << 3 << 4;
