@@ -85,16 +85,3 @@ quint16 TestSlaveData::registerValue(uint registerAddress)
 
     return 0;
 }
-
-void TestSlaveData::incrementAllEnabledRegisters()
-{
-    for(uint idx = 0u; idx < _registerList.size(); idx++)
-    {
-        if (_registerList[idx].bState)
-        {
-            _registerList[idx].value++;
-        }
-    }
-
-    emit dataChanged();
-}

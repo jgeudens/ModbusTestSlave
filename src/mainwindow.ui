@@ -221,7 +221,7 @@
          <item row="0" column="0">
           <widget class="QCheckBox" name="checkAutoIncrement">
            <property name="text">
-            <string>Auto increment data (1/sec)</string>
+            <string>Auto increment data (1/sec) (first 10 registers)</string>
            </property>
           </widget>
          </item>

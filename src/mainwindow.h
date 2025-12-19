@@ -2,13 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTimer>
 #include <QButtonGroup>
 
 #include "testslavemodbus.h"
 #include "testslavedata.h"
 
 #include "registerdatamodel.h"
+#include "incgraph.h"
+#include "sinegraph.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,17 +31,18 @@ private slots:
     void handleDeviceError(QModbusDevice::Error newError);
     void onStateChanged(QModbusDevice::State state);
 
-    void handleAutoIncTick();
     void handleRequestProcessed();
 
 private:
 
     Ui::MainWindow *_pUi;
 
-    QTimer _autoIncTimer;
     bool _bAutoInc;
 
     bool _bErrorOnce;
+
+    IncGraph* _pIncGraph;
+    SineGraph* _pSineGraph;
 
     QButtonGroup _exceptionGroup;
     QButtonGroup _errorRecurrenceGroup;

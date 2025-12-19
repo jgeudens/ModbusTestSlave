@@ -46,6 +46,8 @@ SET(APP_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/registerdatamodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/incgraph.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/sinegraph.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.ui
 

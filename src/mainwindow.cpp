@@ -15,10 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _pSlaveData = new TestSlaveData();
     _pSlaveModbus = new TestSlaveModbus(_pSlaveData);
 
-    QList<uint> registerList = QList<uint>() << 0 << 1 << 2 << 3 << 4;
-    _pSlaveData->setRegisterState(registerList, true);
-
     _pRegisterDataModel = new RegisterDataModel(_pSlaveData);
+
+    _pIncGraph = new IncGraph(_pSlaveData);
+    _pSineGraph = new SineGraph(_pSlaveData);
 
     connect(_pSlaveData, &TestSlaveData::dataChanged, _pRegisterDataModel, &RegisterDataModel::handleDataChange);
 
@@ -57,12 +57,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_pSlaveModbus, &TestSlaveModbus::requestProcessed, this, &MainWindow::handleRequestProcessed);
 
     /** Auto increment **/
-    connect(&_autoIncTimer, &QTimer::timeout, this, &MainWindow::handleAutoIncTick);
-    _autoIncTimer.start(1000);
     _bAutoInc = false;
     connect(_pUi->checkAutoIncrement, &QCheckBox::stateChanged, this,
         [=](int state){
             _bAutoInc = (state == Qt::Checked);
+            _pIncGraph->setState(_bAutoInc);
         });
 
     /** Setup registerView **/
@@ -73,16 +72,23 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Don't stretch columns, resize to contents */
     _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
+    QList<uint> registerList = QList<uint>() << 0 << 1 << 2 << 3 << 4;
+    _pSlaveData->setRegisterState(registerList, true);
+
+    _pIncGraph->setRegisters(0, 10);
+
+    _pSlaveData->setRegisterState(10, true);
+    _pSineGraph->setRegister(10);
+    _pSineGraph->setPeriod(10000);
+
     QString windowCaption;
-    windowCaption = QString("ModbusTestSlave");
+    windowCaption = QString("ModbusTestSim");
 
     setWindowTitle(windowCaption);
 }
 
 MainWindow::~MainWindow()
 {
-    _autoIncTimer.stop();
-
     if (_pSlaveModbus)
     {
         _pSlaveModbus->disconnectDevice();
@@ -137,14 +143,6 @@ void MainWindow::onStateChanged(QModbusDevice::State state)
     _pUi->spinSlaveId->setEnabled(!connected);
     _pUi->spinSlavePort->setEnabled(!connected);
     _pUi->btnDisconnect->setEnabled(connected);
-}
-
-void MainWindow::handleAutoIncTick()
-{
-    if (_bAutoInc)
-    {
-        _pSlaveData->incrementAllEnabledRegisters();
-    }
 }
 
 void MainWindow::handleRequestProcessed()
