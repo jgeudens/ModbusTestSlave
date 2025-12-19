@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), _pUi(new Ui::Main
     _pSineGraph->setPeriod(10000);
 
     QString windowCaption;
-    windowCaption = QString("ModbusTestSim");
+    windowCaption = QString("ModbusSim");
 
     setWindowTitle(windowCaption);
 }

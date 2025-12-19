@@ -5,8 +5,8 @@
    enable-background="new 0 0 48 48"
    id="svg8"
    sodipodi:docname="Icons8_flat_sim_card.svg"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   inkscape:export-filename="/home/jens/Projects/ModbusTestSlave/ModbusTestSlave.git/misc/icon/icon-256x256.png"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   inkscape:export-filename="icon-256x256.png"
    inkscape:export-xdpi="512"
    inkscape:export-ydpi="512"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -38,18 +38,20 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1852"
-     inkscape:window-height="1016"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
      id="namedview10"
      showgrid="false"
      inkscape:zoom="12.698459"
      inkscape:cx="35.004247"
-     inkscape:cy="18.860556"
-     inkscape:window-x="68"
-     inkscape:window-y="27"
+     inkscape:cy="18.821181"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg8"
-     inkscape:pagecheckerboard="0" />
+     inkscape:pagecheckerboard="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <path
      fill="#009688"
      d="M36,45H12c-2.2,0-4-1.8-4-4V7c0-2.2,1.8-4,4-4h16.3c1.1,0,2.1,0.4,2.8,1.2l7.7,7.7c0.8,0.8,1.2,1.8,1.2,2.8 V41C40,43.2,38.2,45,36,45z"
@@ -64,13 +66,14 @@
      id="path6" />
   <text
      xml:space="preserve"
-     style="font-size:8px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px"
-     x="11.764951"
-     y="16.289087"
-     id="text18"><tspan
+     style="font-size:6.77647px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.847058"
+     x="10.867574"
+     y="15.368117"
+     id="text18"
+     transform="scale(0.98566704,1.0145414)"><tspan
        sodipodi:role="line"
        id="tspan16"
-       x="11.764951"
-       y="16.289087"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:Mallanna;-inkscape-font-specification:Mallanna">Modbus</tspan></text>
+       x="10.867574"
+       y="15.368117"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.77647px;font-family:Mallanna;-inkscape-font-specification:Mallanna;stroke-width:0.847058">Modbus</tspan></text>
 </svg>

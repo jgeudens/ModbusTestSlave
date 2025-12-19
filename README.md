@@ -1,7 +1,8 @@
-# Build status
-[![Build status](https://ci.appveyor.com/api/projects/status/v7ysjn9c2koy1tb8?svg=true)](https://ci.appveyor.com/project/jgeudens/modbustestslave)
+<img src="./misc/icon/icon-256x256.png" alt="modbussim logo" title="ModbusSim" align="right" height="150" />
 
-# What is ModbusTestSlave
-ModbusTestSlave is an application that can be used to test a modbus master. The application consists of 2 main set of modules. A GUI-less part that contains all logic that can also be used in automated tests. The second part is a GUI that can be used for manual testing.
+Build status: [![Build](https://github.com/ModbusScope/ModbusSim/actions/workflows/ccpp.yml/badge.svg?branch=master)](https://github.com/ModbusScope/ModbusSim/actions/workflows/ccpp.yml)
 
-![ModbusTestSlave demo](ModbusTestSlave.png)
+# What is ModbusSim
+ModbusSim is an application that can be used to test a modbus master. The application consists of 2 main set of modules. A GUI-less part that contains all logic that can also be used in automated tests. The second part is a GUI that can be used for manual testing.
+
+![ModbusSim demo](ModbusSim.png)
