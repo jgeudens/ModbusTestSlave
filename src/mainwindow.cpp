@@ -2,13 +2,11 @@
 
 #include "ui_mainwindow.h"
 
+#include <QDebug>
 #include <QModbusTcpServer>
 #include <QUrl>
-#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    _pUi(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), _pUi(new Ui::MainWindow)
 {
     _pUi->setupUi(this);
 
@@ -65,10 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /** Setup registerView **/
     _pUi->tblRegData->setModel(_pRegisterDataModel);
     _pUi->tblRegData->verticalHeader()->show();
-    _pUi->tblRegData->horizontalHeader()->show(); // Not sure yet (show or not to show?)
-
-    /* Don't stretch columns, resize to contents */
-    _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    _pUi->tblRegData->horizontalHeader()->show();
+    _pUi->tblRegData->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QList<uint> registerList = QList<uint>() << 0 << 1 << 2 << 3 << 4;
     _pSlaveData->setRegisterState(registerList, true);
@@ -80,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _pSineGraph->setPeriod(10000);
 
     QString windowCaption;
-    windowCaption = QString("ModbusTestSim");
+    windowCaption = QString("ModbusSim");
 
     setWindowTitle(windowCaption);
 }

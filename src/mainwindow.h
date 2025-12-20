@@ -1,14 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QButtonGroup>
+#include <QMainWindow>
 
-#include "testslavemodbus.h"
 #include "testslavedata.h"
+#include "testslavemodbus.h"
 
-#include "registerdatamodel.h"
 #include "incgraph.h"
+#include "registerdatamodel.h"
 #include "sinegraph.h"
 
 namespace Ui {
@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -34,8 +34,7 @@ private slots:
     void handleRequestProcessed();
 
 private:
-
-    Ui::MainWindow *_pUi;
+    Ui::MainWindow* _pUi;
 
     bool _bAutoInc;
 
@@ -47,10 +46,10 @@ private:
     QButtonGroup _exceptionGroup;
     QButtonGroup _errorRecurrenceGroup;
 
-    TestSlaveModbus *_pSlaveModbus;
-    TestSlaveData *_pSlaveData;
+    TestSlaveModbus* _pSlaveModbus;
+    TestSlaveData* _pSlaveData;
 
-    RegisterDataModel *_pRegisterDataModel;
+    RegisterDataModel* _pRegisterDataModel;
 };
 
 #endif // MAINWINDOW_H
